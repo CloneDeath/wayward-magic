@@ -1,0 +1,14 @@
+{
+    "name": "Magic",
+    "description": "Magic is a mod that adds magic spells to the game.",
+    "version": "1.0.0",
+    "author": "Nicholas Rodine",
+    "compatibleMinorVersions": [
+        6
+    ],
+    "unloadable": true,
+    "file": "HelloWorld.js",
+    "languages": [
+        "lang/english"
+    ]
+}

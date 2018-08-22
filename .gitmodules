@@ -1,0 +1,4 @@
+[submodule "mod-reference"]
+	path = mod-reference
+	url = git@github.com:WaywardGame/mod-reference.git
+	branch = master
