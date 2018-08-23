@@ -41,20 +41,4 @@ class ManaStatDescription implements IStatDisplayDescription {
     color?: string = "#00f";
     displayType?: StatDisplayType = StatDisplayType.Statbar;
 	displayOrder?: number = 100;
-	
-    /**
-     * Handlers for when the stat changes. Called when the stat changes & when the stat max changes.
-     */
-    //onChange?: Array<(statElement: Component, entity: IBaseEntity, stat: IStat, oldValue?: number) => void>;
-	
-	/**
-     * Requires `StatDisplayType.Attribute`.
-     *
-     * For overriding the normal formatted output of a stat.
-     */
-    //getFormatted?(entity: IBaseEntity, stat?: IStat): IStringSection[];
-    /**
-     * A function that will initialize a tooltip for this stat element
-     */
-    //tooltip?(tooltip: ITooltip, entity: IBaseEntity, stat?: IStat): any;
 }
