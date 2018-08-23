@@ -6,6 +6,6 @@
     "compatibleMinorVersions": [
         6
     ],
-    "unloadable": true,
+    "unloadable": false,
     "file": "out/HelloWorld.js"
 }

@@ -38,7 +38,6 @@ export default class HelloWorld extends Mod {
 }
 
 class ManaStatDescription implements IStatDisplayDescription {
-	imagePath?: string = "star.png";
     color?: string = "#00f";
     displayType?: StatDisplayType = StatDisplayType.Statbar;
 	displayOrder?: number = 100;
