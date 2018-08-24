@@ -1,11 +1,18 @@
 import { IMenuBarButtonDescription, MenuBarButtonGroup } from "newui/screen/screens/game/static/menubar/MenuBarButtonDescriptions";
-import { ITooltip } from "newui/component/IComponent";
 import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
+import { Bindable } from "Enums";
+import { ITooltip } from "newui/component/IComponent";
 
-export class SpellbookMenuBarButtonDescription implements IMenuBarButtonDescription {
+export class SpellbookMenuBarButton implements IMenuBarButtonDescription {
 	public static buttonName : string = "Spellbook";
 
 	group : MenuBarButtonGroup = MenuBarButtonGroup.World;
+
+	bindable: Bindable;
+
+	constructor(bindable: Bindable){
+		this.bindable = bindable;
+	}
 
 	tooltip?(tooltip: ITooltip): ITooltip {
 		return tooltip.addText(t => t.setText(() => [{content: "Spellbook"}]));

@@ -5,7 +5,7 @@ import StatFactory from "entity/StatFactory";
 import IPlayer from "player/IPlayer";
 import { HookMethod } from "mod/IHookHost";
 import Log from "utilities/Log";
-import { SpellbookMenuBarButtonDescription } from "./Spells/SpellbookMenuBarButtonDescription";
+import { SpellbookMenuBarButton } from "./Spells/SpellbookMenuBarButton";
 
 let log : Log;
 
@@ -22,7 +22,8 @@ export default class HelloWorld extends Mod {
 		this.manaFactory.setMax(100);
 		this.manaFactory.setChangeTimer(10, 1);
 
-		this.addMenuBarButton("Spellbook", new SpellbookMenuBarButtonDescription());
+		let binding = this.addBindable("spellbook", { key: "KeyB"});
+		this.addMenuBarButton(SpellbookMenuBarButton.buttonName, new SpellbookMenuBarButton(binding));
 	}
 
 	@HookMethod
