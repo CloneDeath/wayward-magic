@@ -6,17 +6,12 @@ import IPlayer from "player/IPlayer";
 import { HookMethod } from "mod/IHookHost";
 import Log from "utilities/Log";
 import { SpellbookMenuBarButton } from "./Spells/SpellbookMenuBarButton";
-import Register from "mod/ModRegistry";
-import { SpellbookDialog } from "./Spells/SpellbookDialog";
 
 let log : Log;
 
 export default class HelloWorld extends Mod {
 	mana: number;
 	manaFactory: StatFactory;
-
-	@Register.dialog("Spellbook", SpellbookDialog.description, SpellbookDialog)
-	
 
 	public onInitialize(): void {
 		log = this.getLog();

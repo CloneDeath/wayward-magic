@@ -1,9 +1,14 @@
 import Dialog from "newui/screen/screens/game/component/Dialog";
 import { TranslationGenerator } from "newui/component/IComponent";
-import { IDialogDescription, Edge } from "newui/screen/screens/game/Dialogs";
+import { IDialogDescription, Edge, DialogId } from "newui/screen/screens/game/Dialogs";
 import { IHookHost } from "mod/IHookHost";
+import Register from "mod/ModRegistry";
+import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
 
 export class SpellbookDialog extends Dialog implements IHookHost {
+	@Register.dialog("Spellbook", SpellbookDialog.description, SpellbookDialog)
+	public static id : DialogId;
+
 	public static description: IDialogDescription = {
 		minSize: {
 			x: 25,
@@ -22,6 +27,11 @@ export class SpellbookDialog extends Dialog implements IHookHost {
 			[Edge.Bottom, 0],
 		],
 	};
+
+	public constructor(gsapi: IGameScreenApi, id: DialogId) {
+		super(gsapi, id);
+		this.classes.add("spellbook-dialog");
+	}
 
 	getName(): TranslationGenerator {
 		return () => [{content: "spellbook"}];
