@@ -1,5 +1,4 @@
 import { IMenuBarButtonDescription, MenuBarButtonGroup } from "newui/screen/screens/game/static/menubar/MenuBarButtonDescriptions";
-import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
 import { Bindable } from "Enums";
 import { ITooltip } from "newui/component/IComponent";
 
@@ -14,11 +13,11 @@ export class SpellbookMenuBarButton implements IMenuBarButtonDescription {
 		this.bindable = bindable;
 	}
 
-	tooltip?(tooltip: ITooltip): ITooltip {
+	tooltip = (tooltip:ITooltip) : ITooltip => {
 		return tooltip.addText(t => t.setText(() => [{content: "Spellbook"}]));
 	}
 
-	onActivate(api: IGameScreenApi): void{
+	onActivate = function(): void {
 
 	}
 }
