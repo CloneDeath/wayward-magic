@@ -3,6 +3,8 @@ import { TranslationGenerator } from "newui/component/IComponent";
 import { IDialogDescription, Edge, DialogId } from "newui/screen/screens/game/Dialogs";
 import { IHookHost } from "mod/IHookHost";
 import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
+import Button, { ButtonEvent } from "newui/component/Button";
+import MagicMod from "../MagicMod";
 
 export class SpellbookDialog extends Dialog implements IHookHost {
 	public static description: IDialogDescription = {
@@ -24,9 +26,27 @@ export class SpellbookDialog extends Dialog implements IHookHost {
 		],
 	};
 
+	get mana() {
+		return MagicMod.INSTANCE.manaProvider;
+	}
+
 	public constructor(gsapi: IGameScreenApi, id: DialogId) {
 		super(gsapi, id);
 		this.classes.add("spellbook-dialog");
+
+		new Button(this.api)
+			.setText(() => [{content:"ignite"}])
+			.on(ButtonEvent.Activate, () => {
+				this.mana.reduce(localPlayer, 1);
+			})
+			.appendTo(this.body);
+
+		new Button(this.api)
+			.setText(() => [{content:"clairvoyance"}])
+			.on(ButtonEvent.Activate, () => {
+				
+			})
+			.appendTo(this.body);
 	}
 
 	getName(): TranslationGenerator {
