@@ -5,6 +5,7 @@ import { IHookHost } from "mod/IHookHost";
 import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
 import Button, { ButtonEvent } from "newui/component/Button";
 import MagicMod from "../MagicMod";
+import { TileEventType } from "tile/ITileEvent";
 
 export class SpellbookDialog extends Dialog implements IHookHost {
 	public static description: IDialogDescription = {
@@ -38,6 +39,11 @@ export class SpellbookDialog extends Dialog implements IHookHost {
 			.setText(() => [{content:"ignite"}])
 			.on(ButtonEvent.Activate, () => {
 				this.mana.reduce(localPlayer, 1);
+				var x = localPlayer.getFacingPoint().x;
+				var y = localPlayer.getFacingPoint().y;
+				var z = localPlayer.getFacingPoint().z;
+				tileEventManager.create(TileEventType.Fire, x, y, z);
+				game.updateView(true);
 			})
 			.appendTo(this.body);
 
