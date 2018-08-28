@@ -4,7 +4,6 @@ import { IDialogDescription, DialogId } from "newui/screen/screens/game/Dialogs"
 import { IHookHost } from "mod/IHookHost";
 import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
 export declare class SpellbookDialog extends Dialog implements IHookHost {
-    static id: DialogId;
     static description: IDialogDescription;
     constructor(gsapi: IGameScreenApi, id: DialogId);
     getName(): TranslationGenerator;

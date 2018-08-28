@@ -6,12 +6,18 @@ import IPlayer from "player/IPlayer";
 import { HookMethod } from "mod/IHookHost";
 import Log from "utilities/Log";
 import { SpellbookMenuBarButton } from "./Spells/SpellbookMenuBarButton";
+import { SpellbookDialog } from "./Spells/SpellbookDialog";
+import Register from "mod/ModRegistry";
+import { DialogId } from "newui/screen/screens/game/Dialogs";
 
 let log : Log;
 
 export default class HelloWorld extends Mod {
 	mana: number;
 	manaFactory: StatFactory;
+
+	@Register.dialog("Spellbook", SpellbookDialog.description, SpellbookDialog)
+	public spellbookDialogId : DialogId;
 
 	public onInitialize(): void {
 		log = this.getLog();
@@ -23,7 +29,7 @@ export default class HelloWorld extends Mod {
 		this.manaFactory.setChangeTimer(10, 1);
 
 		let binding = this.addBindable("spellbook", { key: "KeyB"});
-		this.addMenuBarButton(SpellbookMenuBarButton.buttonName, new SpellbookMenuBarButton(binding));
+		this.addMenuBarButton(SpellbookMenuBarButton.buttonName, new SpellbookMenuBarButton(binding, this.spellbookDialogId));
 	}
 
 	@HookMethod
