@@ -21,6 +21,10 @@ export class ManaProvider {
 		player.updateStatsAndAttributes();
 	}
 
+	get(localPlayer: IPlayer) { 
+		return localPlayer.getStatValue(this.mana);
+	}
+
 	reduce(localPlayer: IPlayer, amount: number): void {
 		localPlayer.reduceStat(this.mana, amount);
 	}

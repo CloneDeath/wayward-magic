@@ -6,6 +6,7 @@ import MagicMod from "./MagicMod";
 import Log from "utilities/Log";
 import Register, { Registry } from "mod/ModRegistry";
 import { TileEventType } from "tile/ITileEvent";
+import ExploreMap from "renderer/ExploreMap";
 
 type ExecuteFunction<F extends any> = F extends (player: IPlayer, argument: IActionArgument<infer X>, result: IActionResult) => void ? (undefined extends Extract<X, undefined> ?
 	(argument?: IActionArgument<X>) => void : (argument: IActionArgument<X>) => void) : never;
@@ -44,11 +45,45 @@ export class Actions {
 
 	@Register.action(description("ignite"))
 	public ignite(executor: IPlayer, {}: IActionArgument, result: IActionResult){
-		this.mana.reduce(localPlayer, 1);
-		var x = localPlayer.getFacingPoint().x;
-		var y = localPlayer.getFacingPoint().y;
-		var z = localPlayer.getFacingPoint().z;
+		if (this.mana.get(executor) < 0) return;
+		
+		this.mana.reduce(executor, 1);
+		var x = executor.getFacingPoint().x;
+		var y = executor.getFacingPoint().y;
+		var z = executor.getFacingPoint().z;
 		tileEventManager.create(TileEventType.Fire, x, y, z);
 		result.updateRender = true;
+	}
+
+	@Mod.log(MAGIC_MOD_ID)
+	public log: Log;
+
+	@Register.action(description("clairvoyance"))
+	public clairvoyance(executor: IPlayer, {}: IActionArgument, result: IActionResult){
+		let exploredMap = executor.exploredMap;
+		if (!exploredMap) {
+			exploredMap = executor.exploredMap = [];
+		}
+
+		let explored = exploredMap[executor.z];
+		if (!explored) {
+			const layer = (renderer && renderer.layers) ? renderer.layers[executor.z] : undefined;
+			explored = exploredMap[executor.z] = new ExploreMap(layer ? layer.width : game.mapSize, layer ? layer.height : game.mapSize);
+		}
+
+		const bounds = fieldOfView.getBounds(executor);
+		for (let x = bounds.min.x; x < bounds.max.x; x++) {
+			for (let y = bounds.min.y; y < bounds.max.y; y++) {
+				const wx = game.getWrappedCoord(x);
+				const wy = game.getWrappedCoord(y);
+
+				this.log.info("wx: " + wx + ", wy: " + wy + ", val: " + explored.get(wx, wy));
+				if (explored.get(wx, wy) !== 255) {
+					explored.set(wx, wy, 255);
+				}
+			}
+		}
+		result.updateView = true;
+		game.updateView(true);
 	}
 }

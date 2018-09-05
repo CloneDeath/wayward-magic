@@ -37,9 +37,7 @@ export class SpellbookDialog extends Dialog implements IHookHost {
 
 		new Button(this.api)
 			.setText(() => [{content:"clairvoyance"}])
-			.on(ButtonEvent.Activate, () => {
-				
-			})
+			.on(ButtonEvent.Activate, () => Actions.get("clairvoyance").execute())
 			.appendTo(this.body);
 	}
 
