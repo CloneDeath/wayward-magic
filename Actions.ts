@@ -83,6 +83,28 @@ export class Actions {
 				}
 			}
 		}
+
+		if (executor.isLocalPlayer()){
+			const gl = (fieldOfView as any).gl;
+            const explored = world.layers[localPlayer.z].exploredMap;
+
+            gl.bindTexture(gl.TEXTURE_2D, renderer.layers[localPlayer.z].texExplored);
+
+            const bounds = fieldOfView.getBounds(localPlayer);
+            for (let x = bounds.min.x; x < bounds.max.x; x++) {
+                for (let y = bounds.min.y; y < bounds.max.y; y++) {
+                    const wx = game.getWrappedCoord(x);
+                    const wy = game.getWrappedCoord(y);
+                    if (explored.get(wx, wy) !== 255) {
+                        explored.set(wx, wy, 255);
+                        gl.texSubImage2D(gl.TEXTURE_2D, 0, wx, wy, 1, 1, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array([255]));
+                    }
+                }
+            }
+		}
+		
+		fieldOfView.compute(true);
+		result.updateRender = true;
 		result.updateView = true;
 		game.updateView(true);
 	}
