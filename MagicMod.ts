@@ -9,20 +9,20 @@ import { SpellbookDialog } from "./Spells/SpellbookDialog";
 import Register from "mod/ModRegistry";
 import { DialogId } from "newui/screen/screens/game/Dialogs";
 import { ManaProvider } from "./ManaProvider";
-import { IMagicMod } from "./IMagicMod";
+import { IMagicMod, MAGIC_MOD_ID } from "./IMagicMod";
 
 let log : Log;
 
 export default class MagicMod extends Mod implements IMagicMod {
-	public static INSTANCE: IMagicMod;
-
+	@Mod.instance<MagicMod>(MAGIC_MOD_ID)
+	public static readonly INSTANCE: IMagicMod;
+	
 	public manaProvider: ManaProvider;
 
 	@Register.dialog("Spellbook", SpellbookDialog.description, SpellbookDialog)
 	public spellbookDialogId : DialogId;
 
 	public onInitialize(): void {
-		MagicMod.INSTANCE = this;
 		log = this.getLog();
 
 		this.manaProvider = new ManaProvider(this.addStat("Mana", new ManaStatDescription() ));

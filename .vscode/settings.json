@@ -3,6 +3,10 @@
 		"**/*.d.ts": true,
 		"**/*.js": true,
 		"**/*.js.map": true,
-		"out": true
+		"out": true,
+		"mod-reference": true,
+		".gitignore": true,
+		".gitmodules": true,
+		"build.sh": true
 	}
 }
