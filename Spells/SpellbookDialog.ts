@@ -6,6 +6,8 @@ import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
 import Button, { ButtonEvent } from "newui/component/Button";
 import MagicMod from "../MagicMod";
 import { TileEventType } from "tile/ITileEvent";
+import Mod from "mod/Mod";
+import { IMagicMod, MAGIC_MOD_ID } from "../IMagicMod";
 
 export class SpellbookDialog extends Dialog implements IHookHost {
 	public static description: IDialogDescription = {
@@ -27,8 +29,11 @@ export class SpellbookDialog extends Dialog implements IHookHost {
 		],
 	};
 
+	@Mod.instance<MagicMod>(MAGIC_MOD_ID)
+	public readonly magicMod: IMagicMod;
+
 	get mana() {
-		return MagicMod.INSTANCE.manaProvider;
+		return this.magicMod.manaProvider;
 	}
 
 	public constructor(gsapi: IGameScreenApi, id: DialogId) {
