@@ -4,10 +4,7 @@ import { IDialogDescription, Edge, DialogId } from "newui/screen/screens/game/Di
 import { IHookHost } from "mod/IHookHost";
 import IGameScreenApi from "newui/screen/screens/game/IGameScreenApi";
 import Button, { ButtonEvent } from "newui/component/Button";
-import MagicMod from "../MagicMod";
-import { TileEventType } from "tile/ITileEvent";
-import Mod from "mod/Mod";
-import { IMagicMod, MAGIC_MOD_ID } from "../IMagicMod";
+import { Actions } from "../Actions";
 
 export class SpellbookDialog extends Dialog implements IHookHost {
 	public static description: IDialogDescription = {
@@ -29,27 +26,13 @@ export class SpellbookDialog extends Dialog implements IHookHost {
 		],
 	};
 
-	@Mod.instance<MagicMod>(MAGIC_MOD_ID)
-	public readonly magicMod: IMagicMod;
-
-	get mana() {
-		return this.magicMod.manaProvider;
-	}
-
 	public constructor(gsapi: IGameScreenApi, id: DialogId) {
 		super(gsapi, id);
 		this.classes.add("spellbook-dialog");
 
 		new Button(this.api)
 			.setText(() => [{content:"ignite"}])
-			.on(ButtonEvent.Activate, () => {
-				this.mana.reduce(localPlayer, 1);
-				var x = localPlayer.getFacingPoint().x;
-				var y = localPlayer.getFacingPoint().y;
-				var z = localPlayer.getFacingPoint().z;
-				tileEventManager.create(TileEventType.Fire, x, y, z);
-				game.updateView(true);
-			})
+			.on(ButtonEvent.Activate, () => Actions.get("ignite").execute())
 			.appendTo(this.body);
 
 		new Button(this.api)

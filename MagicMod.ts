@@ -9,12 +9,16 @@ import Register from "mod/ModRegistry";
 import { DialogId } from "newui/screen/screens/game/Dialogs";
 import { ManaProvider } from "./ManaProvider";
 import { IMagicMod } from "./IMagicMod";
+import { Actions } from "./Actions";
 
 export default class MagicMod extends Mod implements IMagicMod {
 	public manaProvider: ManaProvider;
 
 	@Register.dialog("Spellbook", SpellbookDialog.description, SpellbookDialog)
 	public spellbookDialogId : DialogId;
+
+	@Register.registry(Actions)
+	public readonly actions: Actions;
 
 	public onInitialize(): void {
 		this.manaProvider = new ManaProvider(this.addStat("Mana", new ManaStatDescription() ));
