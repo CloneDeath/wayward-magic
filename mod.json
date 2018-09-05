@@ -7,5 +7,6 @@
         6
     ],
     "unloadable": false,
+    "multiplayerCompatible": true,
     "file": "out/MagicMod.js"
 }

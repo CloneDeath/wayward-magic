@@ -78,7 +78,7 @@ export class Actions {
 				const wy = game.getWrappedCoord(y);
 
 				this.log.info("wx: " + wx + ", wy: " + wy + ", val: " + explored.get(wx, wy));
-				if (explored.get(wx, wy) !== 255) {
+				if (explored.get(wx, wy) !== 255 && this.isVisible(executor, x, y)) {
 					explored.set(wx, wy, 255);
 				}
 			}
@@ -95,17 +95,27 @@ export class Actions {
                 for (let y = bounds.min.y; y < bounds.max.y; y++) {
                     const wx = game.getWrappedCoord(x);
                     const wy = game.getWrappedCoord(y);
-                    if (explored.get(wx, wy) !== 255) {
+					if (explored.get(wx, wy) !== 255 && this.isVisible(localPlayer, x, y)) {
                         explored.set(wx, wy, 255);
                         gl.texSubImage2D(gl.TEXTURE_2D, 0, wx, wy, 1, 1, gl.ALPHA, gl.UNSIGNED_BYTE, new Uint8Array([255]));
                     }
                 }
             }
 		}
-		
+
 		fieldOfView.compute(true);
 		result.updateRender = true;
 		result.updateView = true;
 		game.updateView(true);
+	}
+
+	isVisible(player: IPlayer, x: number, y: number){
+		return this.distance(player.x, player.y, x, y) < fieldOfView.radius;
+	}
+
+	distance(x1: number, y1: number, x2: number, y2: number):number{
+		let dx = x1 - x2;
+		let dy = y1 - y2;
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 }
