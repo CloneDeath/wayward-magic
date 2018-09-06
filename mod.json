@@ -1,12 +1,13 @@
 {
-    "name": "Magic",
-    "description": "Magic is a mod that adds magic spells to the game.",
-    "version": "1.0.0",
-    "author": "Nicholas Rodine",
-    "compatibleMinorVersions": [
-        6
-    ],
-    "unloadable": false,
-    "multiplayerCompatible": true,
-    "file": "out/MagicMod.js"
+	"name": "Magic",
+	"description": "Magic is a mod that adds magic spells to the game.",
+	"version": "1.0.0",
+	"author": "Nicholas Rodine",
+	"compatibleMinorVersions": [
+		6
+	],
+	"unloadable": false,
+	"multiplayerCompatible": true,
+	"file": "out/MagicMod.js",
+	"publishedFileId": "1504543770"
 }
